@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 import uvicorn
+from pydantic import BaseModel, Field, EmailStr
 
 app = FastAPI()
 
@@ -70,6 +71,32 @@ def get_students_by_query(dept : str, cgpa : float):
         if student["dept"].lower() == dept.lower() and student["cgpa"] >= cgpa
     ]
     return filtered_students
+
+
+class Student(BaseModel):
+    name : str = Field(..., min_length=3, max_length=20)
+    roll_no : int
+    dept : str
+    cgpa : float = Field(..., ge=4)
+    email : EmailStr
+
+
+students=[]
+
+@app.post("/student/add")
+def student_model(student : Student):
+    students.append(student)
+    
+    return f"Student Added : {students}"
+
+
+
+
+
+
+
+
+
 
 if __name__ == "__main__":
     # To run this file:
