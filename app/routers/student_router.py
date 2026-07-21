@@ -3,7 +3,7 @@ from ..models.student import Student, Student_Response
 
 student_router = APIRouter(
     prefix="/student",
-    tags=["Students"] # Adding a tag for better OpenAPI docs organization
+    tags=["Students"]
 )
 students=[]
 
