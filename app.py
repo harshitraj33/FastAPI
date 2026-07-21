@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 import uvicorn
+from typing import Annotated
 from pydantic import BaseModel, Field, EmailStr
 
 app = FastAPI()
@@ -79,6 +80,7 @@ class Student(BaseModel):
     dept : str
     cgpa : float = Field(..., ge=4)
     email : EmailStr
+    phone : Annotated[str, Field(pattern=r"[6-9]\d{10}$")]
 
 
 students=[]
