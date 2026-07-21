@@ -15,7 +15,7 @@ class Student(BaseModel):
     
 class Student_Response(BaseModel):
     name : str
-    rollno : int
+    roll_no : int
     dept : str
     cgpa : float
     email : EmailStr
