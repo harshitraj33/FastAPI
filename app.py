@@ -81,6 +81,17 @@ class Student(BaseModel):
     cgpa : float = Field(..., ge=4)
     email : EmailStr
     phone : Annotated[str, Field(pattern=r"[6-9]\d{10}$")]
+    aadhar : str = Field(...,pattern=r"\d{12}$")
+    pancard : str = Field(...,pattern=r"^[A-Z]{5}[0-9]{4}[A-Z]{1}$")
+    password : str = Field(...,min_length=8)
+    
+    
+class Student_Response(BaseModel):
+    name : str
+    rollno : int
+    dept : str
+    cgpa : float
+    email : EmailStr
 
 
 students=[]
@@ -88,18 +99,14 @@ students=[]
 @app.post("/student/add")
 def student_model(student : Student):
     students.append(student)
-    
     return f"Student Added : {students}"
 
-
-
-
-
-
-
-
-
-
+@app.get("/student/get",response_model=Student_Response)
+def getStudentDetails():
+    student_detail = {"name":"amit", "rollno":21, "dept":"CSE", "cgpa":7, "email":"amit@gmail.com"}
+    return student_detail
+    
+    
 if __name__ == "__main__":
     # To run this file:
     # 1. Make sure you have uvicorn installed: pip install "uvicorn[standard]"
