@@ -46,3 +46,11 @@ async def update_student(id,student_update):
         }
     )
     return student_update
+
+
+async def delete_student(id):
+    await student_collection.delete_one(
+        {
+            "_id" : ObjectId(id)
+        }
+    )
