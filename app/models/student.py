@@ -1,4 +1,4 @@
-from typing import Annotated
+from typing import Annotated, Optional
 from pydantic import BaseModel, Field, EmailStr
 
 class Student(BaseModel):
@@ -19,3 +19,11 @@ class Student_Response(BaseModel):
     dept : str
     cgpa : float
     email : EmailStr
+    
+class Student_Update(BaseModel):
+    name : Optional[str] = None
+    rollno : Optional[int] = None
+    department : Optional[str] = None
+    email : Optional[EmailStr] = None
+    password : Optional[str] = None
+    phone : Optional[str] = None

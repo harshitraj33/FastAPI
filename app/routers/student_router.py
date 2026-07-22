@@ -1,6 +1,6 @@
 from fastapi import APIRouter, FastAPI
 from ..models.student import Student, Student_Response
-from app.services.student_service import add_student
+from app.services.student_service import add_student,get_all_student, get_one_student
 
 student_router = FastAPI()
 student_router = APIRouter(
@@ -17,3 +17,13 @@ async def student_model(student : Student):
         "message":"student added",
         "id" : str(student_id)
     }
+    
+@student_router.get("/get")
+async def get_students():
+
+    return await get_all_student()
+
+#get student by id
+@student_router.get("/getone", response_model=Student_Response)
+async def get_only_one_student(id):
+    return await get_one_student(id)
