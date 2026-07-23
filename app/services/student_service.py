@@ -54,3 +54,41 @@ async def delete_student(id):
             "_id" : ObjectId(id)
         }
     )
+from typing import Optional
+async def get_filtered_student_list(
+    department : Optional[str] = None,
+    rollno : Optional[int] = None,
+    min_cgpa : Optional[float] = None,
+    max_cgpa : Optional[float] = None,
+    name : Optional[str] = None
+):
+    query = {}
+    if department:
+        query["department"] = {"$regex" : department, "$options" : "i"}
+    
+    #cgpa
+    if min_cgpa is not None or max_cgpa is not None:
+
+        query["cgpa"] = {}
+
+        if min_cgpa is not None:
+            query["cgpa"]["$gte"] = min_cgpa
+
+        if max_cgpa is not None:
+            query["cgpa"]["$lte"] = max_cgpa
+    
+    #roll no
+    if rollno is not None:
+        query["rollno"] = {"$regex" : rollno, "$options" : "i"}
+
+    #name
+    if name is not None:
+        query["name"] = {"$regex" : name, "$options" : "i"}
+
+    students=[]
+
+    async for student in student_collection.find(query):
+        student["_id"] = str(student["_id"])
+        students.append(student)
+
+    return students

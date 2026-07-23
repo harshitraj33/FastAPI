@@ -27,3 +27,11 @@ class Student_Update(BaseModel):
     email : Optional[EmailStr] = None
     password : Optional[str] = None
     phone : Optional[str] = None
+    
+class Student_Filtered(BaseModel):
+    department : Optional[str] = None
+    rollno : Optional[int] = None
+    min_cgpa : Optional[float] = None
+    max_cgpa : Optional[float] = None
+    name : Optional[str] = None
+    
